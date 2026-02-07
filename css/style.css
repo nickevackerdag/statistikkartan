@@ -1,0 +1,288 @@
+:root{
+  --bg:#0b0d10;
+  --panel:#12161c;
+  --panel2:#0f1318;
+  --text:#e8eef7;
+  --muted:#a4b0bf;
+  --border:rgba(255,255,255,0.12);
+  --btn:#1b2531;
+  --btn2:#253245;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --radius: 14px;
+
+  /* Map UI */
+  --mapui-bg: rgba(15, 19, 24, 0.92);
+  --mapui-border: rgba(255,255,255,0.18);
+  --mapui-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font: 14px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width: 220px;
+}
+.muted{ color:var(--muted); }
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--btn);
+  color:var(--text);
+  padding:8px 10px;
+  border-radius:12px;
+  cursor:pointer;
+}
+.btn:hover{ background:var(--btn2); }
+
+.layout{
+  height: calc(100vh - 58px);
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0;
+}
+
+#map{
+  height:100%;
+  width:100%;
+}
+
+.panel{
+  height:100%;
+  overflow:auto;
+  border-left:1px solid var(--border);
+  background:var(--panel2);
+  padding:12px;
+}
+
+.panelSection{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow: var(--shadow);
+}
+
+.panelTitle{
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.status{
+  white-space:pre-wrap;
+}
+
+/* ---------- Legend items (re-used in map legend panel) ---------- */
+.legend{
+  display:grid;
+  gap:8px;
+}
+.legendItem{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:12px;
+  background:rgba(255,255,255,0.04);
+}
+.swatch{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.80);
+  flex: 0 0 auto;
+}
+.legendLeft{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---------- Map UI (flytande kontroller) ---------- */
+.leaflet-control.mapui{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.mapuiStack{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Rund knapp (FAB) */
+.mapuiFab{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--mapui-border);
+  background: var(--mapui-bg);
+  box-shadow: var(--mapui-shadow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mapuiFab:hover{ background: rgba(255,255,255,0.10); }
+.mapuiFab img{
+  width: 36px;
+  height: 36px;
+  display:block;
+}
+
+/* Legend-ikon (en enkel "list"-symbol via CSS) */
+.legendIcon{
+  width: 22px;
+  height: 22px;
+  display:block;
+  position: relative;
+}
+.legendIcon::before,
+.legendIcon::after{
+  content:"";
+  position:absolute;
+  left:3px; right:3px;
+  height:2px;
+  background: rgba(255,255,255,0.90);
+  border-radius: 2px;
+  box-shadow:
+    0 6px 0 rgba(255,255,255,0.90),
+    0 12px 0 rgba(255,255,255,0.90);
+  top:5px;
+}
+
+/* Serie-dropdown: ser ut som en kontroll/pill med nedåtpil */
+.mapuiSelect{
+  position: relative;
+  height: 44px;
+  min-width: 170px;
+  border-radius: 999px;
+  border: 1px solid var(--mapui-border);
+  background: var(--mapui-bg);
+  box-shadow: var(--mapui-shadow);
+  display:flex;
+  align-items:center;
+  padding: 0 42px 0 14px;
+  color: var(--text);
+}
+
+.mapuiSelectLabel{
+  font-size: 12px;
+  color: var(--muted);
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.mapuiSelectValue{
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+/* Nedåtpil (v-lik) */
+.mapuiSelect::after{
+  content:"";
+  position:absolute;
+  right: 16px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,0.85);
+  border-bottom: 2px solid rgba(255,255,255,0.85);
+  transform: translateY(-60%) rotate(45deg);
+}
+
+/* Själva <select> ligger ovanpå men är osynlig */
+.mapuiSelect select{
+  position:absolute;
+  inset: 0;
+  width:100%;
+  height:100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Legendpanel på kartan */
+.leaflet-control.legendpanel{
+  background: var(--mapui-bg);
+  border: 1px solid var(--mapui-border);
+  border-radius: 16px;
+  box-shadow: var(--mapui-shadow);
+  padding: 10px;
+  width: 280px;
+  color: var(--text);
+}
+
+.legendpanelHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 8px;
+}
+.legendpanelTitle{
+  font-weight: 800;
+}
+.legendpanelClose{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  cursor:pointer;
+}
+.legendpanelClose:hover{ background: rgba(255,255,255,0.10); }
+
+.legendpanel.hidden{
+  display:none;
+}
+
+@media (max-width: 980px){
+  .layout{ grid-template-columns: 1fr; grid-template-rows: 62vh auto; }
+  .panel{ border-left:none; border-top:1px solid var(--border); }
+  .mapuiSelect{ min-width: 150px; }
+}

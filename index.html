@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data på karta</title>
+
+  <!-- Leaflet (CDN). Byt gärna till lokala filer om du vill. -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Lokal CSS -->
+  <link rel="stylesheet" href="css/style.css?v=6" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <strong id="title">Data på karta</strong>
+      <span class="muted" id="subtitle"></span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="fitBtn" type="button" title="Zooma så att alla punkter syns">
+        Passa in
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <div id="map"></div>
+
+    <aside class="panel">
+      <div class="panelSection">
+        <div class="panelTitle">Status</div>
+        <div id="status" class="status muted">Laddar…</div>
+      </div>
+
+      <div class="panelSection">
+        <div class="panelTitle">Info</div>
+        <div class="muted" id="info">
+          Markörfärger baseras på kvartiler för vald visningskolumn.
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Lokal JS -->
+  <script src="js/config.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
+
+  <!-- Sanity check: om detta syns så körs HTML-script, men app.js kan fortfarande saknas -->
+  <script>
+    const st = document.getElementById("status");
+    if(st && st.textContent.trim() === "Laddar…") st.textContent = "JS laddat – väntar på app.js…";
+  </script>
+
+</body>
+</html>
