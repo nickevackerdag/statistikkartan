@@ -177,6 +177,43 @@
       .replace(/'/g, "&#039;");
   }
 
+
+  function buildPinSvg(color){
+    // Din SVG, men med dynamisk fill på "pinnen"
+    // Obs: inga radbrytningar krävs, men de gör det lättare att läsa.
+    return `
+  <svg width="100%" height="100%" viewBox="0 0 35 42" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
+    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.0172058,0,0,0.0172058,-0.412939,-0.412939)">
+      <path d="M315.377,1729.31c-180.027,-180.85 -291.377,-430.18 -291.377,-705.31c0,-551.915 448.085,-1000 1000,-1000c551.91,0 1000,448.085 1000,1000c0,275.13 -111.35,524.46 -291.38,705.31l0.28,0l-708.9,710.69l-708.904,-710.69l0.281,0Z"
+        style="fill:${color};"/>
+    </g>
+    <g transform="matrix(0.0205482,0,0,0.0210702,-8.05327,-4.29364)">
+      <ellipse cx="1229.26" cy="1020.37" rx="418.669" ry="408.295" style="fill:#fff;"/>
+    </g>
+  </svg>`.trim();
+  }
+
+  function makePinIcon(color, sizePx){
+    // sizePx = bredd på ikonen i px. Höjden följer viewBox proportionen (42/35).
+    const w = sizePx;
+    const h = Math.round(sizePx * (42 / 35));
+
+    const html = `
+      <div class="pinMarker" style="width:${w}px;height:${h}px">
+        ${buildPinSvg(color)}
+      </div>
+    `.trim();
+
+    return L.divIcon({
+      className: "",          // ingen Leaflet-standardklass (vi styr helt själva)
+      html,
+      iconSize: [w, h],
+      iconAnchor: [Math.round(w/2), h],        // spetsen nere i mitten
+      popupAnchor: [0, -Math.round(h*0.85)]    // popup ovanför markören
+    });
+  }
+
   function buildPopup(row){
     const descCol = CFG.columns.description;
     const desc = getColumn(row, descCol) ?? "";
@@ -399,14 +436,13 @@
     for(const p of validPoints){
       const color = colorForValue(p.v, qs);
 
-      const marker = L.circleMarker([p.lat, p.lon], {
-        radius,
-        color: "rgba(255,255,255,0.75)",
-        weight: 1,
-        fillColor: color,
-        fillOpacity: 0.95,
-        opacity: 0.9
-      });
+      // Behåll din "50% större"-logik men i px för pin-ikon
+      const base = (CFG.map?.markerRadius ?? 7);
+      const sizePx = Math.round(base * 1.5 * 4); // 7→42px-ish. Justera faktor vid behov.
+
+      const icon = makePinIcon(color, sizePx);
+
+      const marker = L.marker([p.lat, p.lon], { icon });
 
       marker.bindPopup(buildPopup(p.row), { maxWidth: 340 });
       marker.addTo(markersLayer);
