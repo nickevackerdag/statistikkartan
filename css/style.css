@@ -11,10 +11,10 @@
   --radius: 14px;
 
   /* Map UI */
-  --mapui-bg: rgba(15, 19, 24, 0.92);
-  --mapui-border: rgba(255,255,255,0.18);
-  --mapui-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
+  --mapui-bg: rgba(255,255,255,0.95);
+  --mapui-border: rgba(0,0,0,0.15);
+  --mapui-shadow: 0 8px 20px rgba(0,0,0,0.20);
+  }
 
 *{ box-sizing:border-box; }
 html, body{ height:100%; }
@@ -178,17 +178,18 @@ body{
   display:block;
   position: relative;
 }
+/* Legend-ikon i röd ton */
 .legendIcon::before,
 .legendIcon::after{
+  background: #b60000;
+  box-shadow:
+    0 6px 0 #b60000,
+    0 12px 0 #b60000;
   content:"";
   position:absolute;
   left:3px; right:3px;
   height:2px;
-  background: rgba(255,255,255,0.90);
   border-radius: 2px;
-  box-shadow:
-    0 6px 0 rgba(255,255,255,0.90),
-    0 12px 0 rgba(255,255,255,0.90);
   top:5px;
 }
 
@@ -208,6 +209,7 @@ body{
 }
 
 .mapuiSelectLabel{
+  display: none;
   font-size: 12px;
   color: var(--muted);
   margin-right: 10px;
@@ -215,6 +217,7 @@ body{
 }
 
 .mapuiSelectValue{
+  color: #b60000;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -224,6 +227,8 @@ body{
 
 /* Nedåtpil (v-lik) */
 .mapuiSelect::after{
+  border-righht-color: #b60000;
+  border-bottom-color: #b60000;
   content:"";
   position:absolute;
   right: 16px;
@@ -285,4 +290,91 @@ body{
   .layout{ grid-template-columns: 1fr; grid-template-rows: 62vh auto; }
   .panel{ border-left:none; border-top:1px solid var(--border); }
   .mapuiSelect{ min-width: 150px; }
+}
+
+/* Map UI – text & icons on light background */
+.mapuiFab,
+.mapuiSelect{
+  color: #111;
+}
+
+.mapuiSelectLabel{
+  color: #555;
+}
+
+.mapuiSelectValue{
+  color: #111;
+}
+
+/* Nedåtpil i dropdown */
+.mapuiSelect::after{
+  border-right-color: rgba(0,0,0,0.7);
+  border-bottom-color: rgba(0,0,0,0.7);
+}
+
+/* Legend-ikon (tre streck) */
+.legendIcon::before,
+.legendIcon::after{
+  background: rgba(0,0,0,0.8);
+  box-shadow:
+    0 6px 0 rgba(0,0,0,0.8),
+    0 12px 0 rgba(0,0,0,0.8);
+}
+
+.mapuiFab:hover,
+.mapuiSelect:hover{
+  background: rgba(245,245,245,0.98);
+}
+
+/* Zoom-knappar i röd ton */
+.leaflet-control-zoom a{
+  color: #b60000 !important;
+}
+
+/* ===============================
+   Brandfärg på kartkontroller
+   =============================== */
+
+/* Legend-ikon */
+.legendIcon::before,
+.legendIcon::after{
+  background: #b60000;
+  box-shadow:
+    0 6px 0 #b60000,
+    0 12px 0 #b60000;
+}
+
+/* Serie-dropdown */
+.mapuiSelectLabel{
+  display: none;
+}
+.mapuiSelectValue{
+  color: #b60000;
+}
+.mapuiSelect::after{
+  border-right-color: #b60000;
+  border-bottom-color: #b60000;
+}
+
+/* Zoom + / - */
+.leaflet-control-zoom a{
+  color: #b60000 !important;
+}
+
+/* Legend – tydligare färger på ljus bakgrund */
+.legend .swatch{
+  border: 2px solid rgba(0,0,0,0.25);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+}
+
+/* Dropdown (öppnad lista) – ljus bakgrund */
+.mapuiSelect select{
+  background-color: #fff;
+  color: #111;
+}
+
+/* iOS / Safari-specifikt: tvinga ljus stil */
+.mapuiSelect select option{
+  background-color: #fff;
+  color: #111;
 }
